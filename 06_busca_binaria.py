@@ -19,7 +19,7 @@ def busca_binaria(lista, val):
         # Verifica se o valor que está no meio da lista é igual ao valor de busca. 
         # Em caso afirmativo, retornamos a posição do meio, pois o valor de busca
         # foi encontrado
-        if val = lista[meio]:
+        if val == lista[meio]:
             return meio
         
         # Senão, se o valor de busca é MENOR do que o valor do meio, reinicia a busca
