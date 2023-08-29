@@ -67,4 +67,11 @@ hora_fim = time()
 print(f"GILCICLEIDE GARCIA encontrado na posição: {pos4}")
 print(f"Tempo gasto: {(hora_fim - hora_ini)*1000}ms\n")
 
+#Buscando o nome AADRIANA LIMA
+hora_ini = time()
+pos5 = busca_sequencial(nomes, "AADRIANA LIMA")
+hora_fim = time()
+print(f"AADRIANA LIMA encontrado na posição: {pos5}")
+print(f"Tempo gasto: {(hora_fim - hora_ini)*1000}ms\n")
+
 print("-"*40)
