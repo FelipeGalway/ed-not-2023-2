@@ -61,6 +61,29 @@ class FormaGeometrica:
             # Gera um erro que impede a criação do objeto
             raise Exception(f"ERRO: o valor do tipo ({tipo}) deve ser R, T ou E")
 
+    def get_base(self):
+        """Método getter para atributo self.__base"""
+        return self.__base
+
+    def get_altura(self):
+        """Método getter para atributo self.__altura"""
+        return self.__altura
+
+    def get_tipo(self):
+        """Método getter para atributo self.__tipo"""
+        return self.__tipo
+
+    def calc_area(self):
+        """
+        Método que calcula a área da forma, com base naos valores de base, altura e tipo.
+        """
+        if self.__tipo == "R":      #Retângulo
+            return self.__base * self.__altura
+        if self.__tipo == "T":      #Triângulo
+            return self.__base * self.__altura / 2
+        else:      #self.__tipo = "E" (Eclipse/cículo)
+            return (self.__base / 2) * (self.__altura / 2) * pi
+
     def __str__(self):
         """
             Gera uma representação dos valores armazenados dentro do objeto como string, para
@@ -98,3 +121,15 @@ triangulo1.set_base(12)
 triangulo1.set_altura(19.7)
 #triangulo1.set_tipo(False)
 print(f"Objeto triangulo1 modificado ", triangulo1)
+
+print("=============================================================")
+print("INFORMAÇÕES SOBRE O OBJETO triangulo1")
+print(f"Base: {triangulo1.get_base()}")
+print(f"Altura: {triangulo1.get_altura()}")
+print(f"Tipo: {triangulo1.get_tipo()}")
+
+print("=============================================================")
+print(f"Área de triângulo: {triangulo1.calc_area()}")
+print(f"Área de eclipse: {triangulo1.calc_area()}")
+print(f"Área de retângulo: {triangulo1.calc_area()}")
+
