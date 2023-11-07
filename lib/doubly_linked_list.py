@@ -90,7 +90,10 @@ class DoublyLinkedList:
             # busca o node que atualmente ocupa a posição onde será feita a inserção
             current = self.__find_node(pos)
 
-            # determina o nodo anterior à posição de inserção
+            # Determina o nodo anterior à posição de inserção
+            before = current.prev
+
+            # Efetua o encaixe do novo nodo na sequência
             before.next = new
             new.prev = before
             new.next = current
@@ -98,6 +101,100 @@ class DoublyLinkedList:
         
         # incrementa a contagem de nodos da lista
         if pos >= 0: self.__count += 1
+
+    def insert_front(self, val):
+        """
+            Método de atalho para inserir no início da lista
+        """
+        self.insert(0, val)
+
+    def insert_back(self, val):
+        """
+            Método de atalho para inserir no final da lista
+        """
+        self.insert(self.get_count(), val)
+
+    def remove(self, pos):
+        """
+            Método que remove um nodo da lista, dada sua posição
+            OBS.: o nodo não é deletado realmente, apenas desligado da lista atual
+        """
+        # 1º caso: lista vazia ou posição fora dos limites
+        if self.get_count() == 0 or pos < 0 or pos >= self.get_count():
+            raise Exception("ERRO: posição inválida para remoção.")
+
+        # 2º caso: remove do início da lista
+        if pos == 0:
+            # vamos remover o nodo apontado por __head
+            removed = self.__head
+            # O novo __head passa a ser o sucessor do novo removido
+            self.__head = removed.next
+            # Se o novo __head for novo vazio, ele não pode ter um antecesssor
+            if self.__head is not None: self.__head.prev = None
+            # Em sado de moção do único nodo restante da lista, __tail precisa
+            # passar a valer None também
+            if self.get_count() == 1: self.__tail = None
+        
+        # 3º caso: remoção do último nodo da lista
+        elif pos == self.get_count()-1:
+            # Vamos remover o nodo apontado por __tail
+            removed = self.__tail
+            # O novo __tail passa a ser o antecessor do nodo removido
+            self.__tail = removed.prev
+            #Se o novo __tail for um nodo válido, ele não pode ter um sucessor
+            if self.__tail is not None: self.__tail.next = None
+            # Em caso de remoção do único nodo restante da lista, __head precisa
+            # passar a valer o None também
+            if self.get_count() == 1: self.__head = None
+
+        # 4º caso: remoção intermediária
+        else:
+            # Pedimos a __find_node() para localizar o nodo a ser removido 
+            removed = self.__find_node(pos)
+            before = removed.prev   # nodo anterior ao que está sendo removido
+            after = removed.next   # nodo seguinte ao que está sendo removido
+            # O nodo posterior passa a apontar, à frente, para o nodo posterior
+            before.next = after
+            # o nodo posteiorme para a apontar, para trás, para o nodo anterior
+            after.prev = before
+
+        # Decrementa o contador de nodos
+        self.__count -= 1
+
+        return removed.data
+
+    def remove_front(self, val):
+        """
+            Método de atalho para remover no início da lista
+        """
+        return self.remove(0)
+
+    def remove_back(self, val):
+        """
+            Método de atalho para remover no final da lista
+        """
+        return self.remove(self.get_count() - 1)
+
+    def peek(self, pos):
+        """
+            Retorna o valor data de um nodo, sem remover este da lista
+        """
+        if self.get_count() == 0 or pos < 0 or pos >= self.get_count():
+            raise Exception("EROO: posição inválida para consulta")
+        node = self.__find_node(pos)
+        return node.data
+
+    def peek_front(self, val):
+        """
+            Método de atalho para consulta da primeira posição
+        """
+        return self.peek(0)
+
+    def peek_back(self, val):
+        """
+            Método de atalho para consulta da últma posição
+        """
+        return self.peek(self.get_count() - 1)
 
     def __str__(self):
         """
